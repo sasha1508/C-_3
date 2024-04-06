@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Урок_3_Клиент": {
+      "commandName": "Project",
+      "commandLineArgs": "Alexandr 127.0.0.1"
+    }
+  }
+}
