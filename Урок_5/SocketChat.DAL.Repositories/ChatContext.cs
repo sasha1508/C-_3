@@ -11,10 +11,16 @@ namespace SocketChat.DAL.Repositories
     public class ChatContext : DbContext
     {
         public DbSet<User> Users { get; set; }
+        public DbSet<SignalRMessage> Messages { get; set; }
 
-        public ChatContext(DbContextOptions<ChatContext> Options) : base(Options)
+        public ChatContext() : base()
         {
             Database.EnsureCreated();
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=socket_chat_db_1;Username=test;Password=Test1234");
         }
     }
 }

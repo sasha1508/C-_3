@@ -14,6 +14,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SocketChat.Common.Entities\SocketChat.Common.Entities.csproj" />
+    <ProjectReference Include="..\SocketChat.DAL.Repositories\SocketChat.DAL.Repositories.csproj" />
   </ItemGroup>
 
 </Project>

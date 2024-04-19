@@ -16,8 +16,8 @@ builder.Services.AddScoped<IUserLogic, UserLogic>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 string connection = builder.Configuration.GetConnectionString("DefaultConnection");
-builder.Services.AddDbContext<ChatContext>(options =>
-    options.UseNpgsql(connection));
+builder.Services.AddDbContext<ChatContext>();//(options =>
+  //  options.UseNpgsql(connection));
 
 var app = builder.Build();
 

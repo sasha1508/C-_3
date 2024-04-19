@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 using SocketChat.Common.Entities;
+using SocketChat.DAL.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +20,7 @@ namespace SocketChat.BLL.Logic
         public async Task SendToUser(SignalRMessage message)
         {
             var client = Clients.Client(message.ConnectionId);
-            await client.SendAsync($"message: {message.Message}. From user: {message.FromUser}");
+            await client.SendAsync($"message: {message.Message}. From user: {message.FromUser}");  
         }
 
     }

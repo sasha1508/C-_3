@@ -9,6 +9,7 @@ namespace SocketChat.Common.Entities
     public class SignalRMessage
 
     {
+        public long Id { get; set; }    
         public string? Message { get; set; }
         public string? FromUser { get; set; }
         public string? ConnectionId { get; set; }

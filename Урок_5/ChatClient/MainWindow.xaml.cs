@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.SignalR.Client;
 using System.Reflection;
 using System.Xml.Linq;
 using SocketChat.Common.Entities;
+using SocketChat.DAL.Repositories;
 
 
 namespace ChatClient
@@ -71,6 +72,13 @@ namespace ChatClient
                 signalRMessage.FromUser = userTextBox.Text;
 
                 await connection.SendAsync("Send", signalRMessage);
+
+                //Сохраняем сообщение в базу данных:
+                using (ChatContext _chatContext = new())
+                {
+                    await _chatContext.Messages.AddAsync(signalRMessage);
+                    await _chatContext.SaveChangesAsync();
+                }
             }
             catch (Exception ex)
             {
