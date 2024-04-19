@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SocketChat.DAL.Repositories
 {
-    public  interface IUserRepository
+    public interface IUserRepository
     {
         Task<List<User>> GetUsersAsync();
         Task AddUsersAsunc(User user);
