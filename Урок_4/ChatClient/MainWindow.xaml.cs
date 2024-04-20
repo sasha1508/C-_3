@@ -39,9 +39,9 @@ namespace ChatClient
                     chatbox.Items.Insert(0, newMessage);
                 });
             });
-
-
         }
+
+
 
         // обработчик загрузки окна
         private async void Window_Loaded(object sender, RoutedEventArgs e)
@@ -60,6 +60,8 @@ namespace ChatClient
                 
             }
         }
+
+
         // обработчик нажатия на кнопку
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
