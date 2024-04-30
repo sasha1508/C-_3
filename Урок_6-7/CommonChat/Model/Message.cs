@@ -10,7 +10,7 @@ namespace CommonChat.Model
     public class Message
     {
         public int Id { get; set; }
-        public string Text { get; set; }
+        public string Text { get; set; } = "";
         public bool IsReceived { get; set; }
 
         public virtual User? ToUser { get; set; }

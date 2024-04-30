@@ -9,15 +9,21 @@ namespace ChatApp
     public class ChatServer
     {
         private IMessageSource _messageSource;
-
         public Dictionary<string, IPEndPoint> clients = new Dictionary<string, IPEndPoint>();
-
         private bool _isWork = true;
+
         public ChatServer(IMessageSource iMessageSource)
         {
             _messageSource = iMessageSource;
         }
 
+        /// <summary>
+        /// Обработчик сообщений
+        /// </summary>
+        /// <param name="chatMessage"></param>
+        /// <param name="ipEndPoint"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         public async Task ProcessMessageAsync(ChatMessage chatMessage, IPEndPoint ipEndPoint)
         {
             switch (chatMessage.Command)
@@ -36,6 +42,11 @@ namespace ChatApp
             }
         }
 
+        /// <summary>
+        /// Подтверждение
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task ConfirmationAsync(int? id)
         {
             Console.WriteLine($"Message id {id}");
@@ -50,6 +61,11 @@ namespace ChatApp
             }
         }
 
+        /// <summary>
+        /// Пересыл письма получателю
+        /// </summary>
+        /// <param name="chatMessage"></param>
+        /// <returns></returns>
         public async Task ReplyMessageAsync(ChatMessage chatMessage)
         {
             if (clients.TryGetValue(chatMessage.ToName, out IPEndPoint ipEndPoint))
@@ -76,7 +92,12 @@ namespace ChatApp
             }
         }
 
-
+        /// <summary>
+        /// Регистрация пользователя в базе данных
+        /// </summary>
+        /// <param name="chatMessage"></param>
+        /// <param name="ipEndPoint"></param>
+        /// <returns></returns>
         public async Task RegisterAsync(ChatMessage chatMessage, IPEndPoint ipEndPoint)
         {
             Console.WriteLine($"{chatMessage.FromName}, message register name");
@@ -87,7 +108,7 @@ namespace ChatApp
                 var conAny = context.Users.Any(x => x.Name == chatMessage.FromName);
                 if (conAny)
                 {
-                    Console.WriteLine("User already exist in database");
+                    Console.WriteLine("Пользователь уже существует в базе данных");
                     return;
                 }
 
@@ -99,14 +120,21 @@ namespace ChatApp
             }
         }
 
+        /// <summary>
+        /// Останавливаем сервер
+        /// </summary>
         public void Stop()
         {
             _isWork = false;
         }
 
+        /// <summary>
+        /// Рабочий цикл чата
+        /// </summary>
+        /// <returns></returns>
         public async Task WorkAsync()
         {
-            Console.WriteLine("Wait message from client");
+            Console.WriteLine("Я сервер. Ожидаю сообщение от клиента.");
             while (_isWork)
             {
                 try
@@ -115,6 +143,7 @@ namespace ChatApp
                     var chatMessage = _messageSource.Receive(ref remoteIpEndPoint);
                     if (chatMessage != null)
                     {
+                        Console.WriteLine(chatMessage.FromName + " -> " + chatMessage.ToName + ": " + chatMessage.Text);
                         await ProcessMessageAsync(chatMessage, remoteIpEndPoint);
                     }
                 }

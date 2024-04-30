@@ -9,6 +9,10 @@ namespace ChatNetwork
     {
         private UdpClient _udpClient;
 
+        /// <summary>
+        /// Создаём нового UDP-клиента
+        /// </summary>
+        /// <param name="port"></param>
         public MessageSource(int port)
         {
             _udpClient = new UdpClient(port);
